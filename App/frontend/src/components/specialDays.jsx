@@ -12,18 +12,15 @@ const RamadanCalendar = () => {
     
     const days = [];
     
-   
     for (let i = 0; i < firstDay; i++) {
       days.push(<div key={`empty-${i}`}></div>);
     }
     
-   
     for (let d = 1; d <= daysInMonth; d++) {
       const currentDate = new Date(year, month, d);
       
       const isRamadan = currentDate >= ramadanStart && currentDate <= ramadanEnd;
       const isEid = currentDate.getTime() === eidDate.getTime();
-      
       
       let bgClass = "text-dark";
       
@@ -49,10 +46,8 @@ const RamadanCalendar = () => {
       <div className="bg-white border rounded-4 shadow-sm p-4 flex-fill mb-4 w-100" style={{ maxWidth: '400px' }}>
         <h3 className="h4 fw-bold text-center mb-4 text-success">{title} {year}</h3>
         
-       
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.5rem' }}>
-         
-          {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
+          {['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'].map(day => (
             <div key={day} className="text-center fw-bold text-secondary small text-uppercase mb-2">
               {day}
             </div>
@@ -65,26 +60,23 @@ const RamadanCalendar = () => {
   };
 
   return (
-    <section className="py-5 bg-light rounded-4 w-100 my-4">
+    <section className="py-5 bg-light rounded-4 w-100">
       <div className="container">
-        
         
         <div className="text-center mb-5">
           <h2 className="display-6 fw-bold text-dark mb-3">
-            Ramadan & Eid al-Fitr 2026
+            Ramadan & Aïd el-Fitr 2026
           </h2>
           <p className="text-muted mx-auto lead" style={{ maxWidth: '700px' }}>
-            The holy month of Ramadan is expected to begin on February 18 and end on March 19, followed by Eid al-Fitr on March 20. 
+            Le mois sacré du Ramadan devrait commencer le 18 février et se terminer le 19 mars, suivi de l’Aïd el-Fitr le 20 mars.
           </p>
         </div>
         
-       
         <div className="d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-start gap-4 mb-5">
-          {renderMonth(2026, 1, 'February')}
-          {renderMonth(2026, 2, 'March')}
+          {renderMonth(2026, 1, 'Février')}
+          {renderMonth(2026, 2, 'Mars')}
         </div>
 
-        
         <div className="d-flex justify-content-center">
           <div className="d-flex flex-wrap justify-content-center gap-4 bg-white p-3 rounded-3 border shadow-sm">
             <div className="d-flex align-items-center gap-2">
@@ -93,7 +85,7 @@ const RamadanCalendar = () => {
             </div>
             <div className="d-flex align-items-center gap-2">
               <div className="rounded-circle bg-warning border border-warning shadow-sm" style={{ width: '20px', height: '20px' }}></div>
-              <span className="fw-medium text-dark">Eid al-Fitr</span>
+              <span className="fw-medium text-dark">Aïd el-Fitr</span>
             </div>
           </div>
         </div>
