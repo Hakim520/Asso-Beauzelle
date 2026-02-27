@@ -28,18 +28,83 @@ function Causes() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const scrollRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const [statusMsg, setStatusMsg] = useState("");
+
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${API_BASE}/api/events/`)
+  //     .then((res) => setEvents(res.data))
+  //     .catch((err) => {
+  //       console.error("Failed to load events:", err);
+  //     });
+  // }, []);
 
 
 
   useEffect(() => {
-    axios
-      .get(`${API_BASE}/api/events/`)
-      .then((res) => setEvents(res.data))
-      .catch((err) => {
-        console.error("Failed to load events:", err);
-      });
-  }, []);
+  let cancelled = false;
 
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // 1) warm-up (réveil)
+  const warmUp = async () => {
+    const maxAttempts = 6; // ~1 minute
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        setStatusMsg("Réveil du serveur…");
+        await axios.get(`${API_BASE}/health/`, { timeout: 15000 });
+        return true;
+      } catch {
+        // backoff progressif
+        await sleep(Math.min(2000 * Math.pow(1.6, attempt), 15000));
+        if (cancelled) return false;
+      }
+    }
+    return false;
+  };
+
+  // 2) fetch events avec timeout + retries
+  const fetchEvents = async () => {
+    const maxAttempts = 8;
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        setStatusMsg(attempt > 0 ? "Chargement des événements…" : "");
+        const res = await axios.get(`${API_BASE}/api/events/`, { timeout: 20000 });
+        if (cancelled) return;
+        setEvents(res.data);
+        setLoading(false);
+        setStatusMsg("");
+        return;
+      } catch (err) {
+        if (cancelled) return;
+        await sleep(Math.min(2000 * Math.pow(1.5, attempt), 15000));
+      }
+    }
+
+    // échec final
+    if (!cancelled) {
+      setLoading(false);
+      setStatusMsg("Impossible de charger les événements pour le moment.");
+    }
+  };
+
+  (async () => {
+    setLoading(true);
+    const ok = await warmUp();
+    if (!ok || cancelled) {
+      setLoading(false);
+      setStatusMsg("Serveur indisponible pour le moment.");
+      return;
+    }
+    await fetchEvents();
+  })();
+
+  return () => {
+    cancelled = true;
+  };
+}, []);
 
 
 
@@ -219,11 +284,28 @@ function Causes() {
             </div>
           </div>
 
-          {events.length === 0 && (
+          {/* {events.length === 0 && (
             <div className="text-center text-muted mt-4">
               Aucun événement disponible pour le moment.
             </div>
-          )}
+          )} */}
+
+          {loading && (
+  <div className="text-center text-muted mt-4">
+    {statusMsg || "Chargement…"}
+  </div>
+)}
+
+{!loading && events.length === 0 && (
+  <div className="text-center text-muted mt-4">
+    Aucun événement disponible pour le moment.
+  </div>
+)}
+
+{!loading && statusMsg && events.length > 0 && (
+  <div className="text-center text-muted mt-3">{statusMsg}</div>
+)}
+
         </div>
       </section>
 
