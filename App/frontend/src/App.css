@@ -195,6 +195,23 @@ html {
   place-items: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  padding: 0 !important;
+  line-height: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+
+.events-nav svg {
+  display: block;          
+}
+
+.events-nav-left svg {
+  transform: translateX(-1px);
+}
+
+.events-nav-right svg {
+  transform: translateX(1px);
 }
 
 .events-nav:hover:not(:disabled) {
@@ -348,7 +365,7 @@ html {
 
 .event-modal-card {
   position: relative;
-  width: min(980px, 100%);
+  width: min(760px, 100%);
   max-height: 90vh;
   overflow: hidden;
   border-radius: 22px;
@@ -364,7 +381,7 @@ html {
 
 .event-modal-image {
   width: 100%;
-  height: 380px;
+  height: 260px;
   object-fit: cover;
   display: block;
 }
@@ -372,31 +389,49 @@ html {
 .event-modal-content {
   padding: 1.35rem 1.5rem 1.6rem;
   overflow-y: auto;
-  max-height: calc(90vh - 380px);
+  max-height: calc(90vh - 260px);
 }
 
 .event-modal-close {
   position: absolute;
   top: 14px;
-  right: 14px;
+  right: 15px;
+
   width: 44px;
   height: 44px;
+
+  padding: 0 !important;
+  line-height: 0;
+
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
   display: grid;
   place-items: center;
+
   color: #111;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
 }
+
+
 
 .event-modal-close:hover {
   transform: scale(1.06);
   background: rgba(255, 255, 255, 0.92);
+}
+
+.event-modal-close svg {
+  display: block;
+  transform: translateY(0.5px); 
 }
 
 /* Responsive */
