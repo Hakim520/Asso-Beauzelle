@@ -34,8 +34,12 @@ const RamadanCalendar = () => {
         <div key={d} className="d-flex justify-content-center">
           <div 
             className={`d-flex align-items-center justify-content-center rounded-circle ${bgClass}`}
-            style={{ width: '40px', height: '40px', fontSize: '0.875rem' }}
-          >
+style={{
+  width: 'clamp(28px, 8.5vw, 40px)',
+  height: 'clamp(28px, 8.5vw, 40px)',
+  fontSize: 'clamp(0.65rem, 2.8vw, 0.875rem)',
+  lineHeight: 1
+}}          >
             {d}
           </div>
         </div>
@@ -43,13 +47,14 @@ const RamadanCalendar = () => {
     }
 
     return (
-      <div className="bg-white border rounded-4 shadow-sm p-4 flex-fill mb-4 w-100" style={{ maxWidth: '400px' }}>
-        <h3 className="h4 fw-bold text-center mb-4 text-success">{title} {year}</h3>
+<div className="bg-white border rounded-4 shadow-sm p-3 p-md-4 flex-fill mb-4 w-100" style={{ maxWidth: '400px' }}>        <h3 className="h4 fw-bold text-center mb-4 text-success">{title} {year}</h3>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.5rem' }}>
-          {['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'].map(day => (
-            <div key={day} className="text-center fw-bold text-secondary small text-uppercase mb-2">
-              {day}
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 'clamp(0.2rem, 1.2vw, 0.5rem)' }}>          {['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'].map(day => (
+<div
+  key={day}
+  className="text-center fw-bold text-secondary small text-uppercase mb-2"
+  style={{ whiteSpace: "nowrap" }}
+>              {day}
             </div>
           ))}
           
