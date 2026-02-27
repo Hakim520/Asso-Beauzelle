@@ -5,6 +5,7 @@ import Causes from "./components/Causes";
 import Footer from "./components/Footer";
 import Brand from "./components/brand";
 import RamadanCalendar from "./components/specialDays";
+import OrnamentDivider from "./components/OrnamentDivider";
 import "./App.css"   
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Hero />
       <About />
       <RamadanCalendar/>
+      <OrnamentDivider />
       <Causes id="causes"/>
       <Brand />
       <Footer />
