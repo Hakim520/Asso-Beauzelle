@@ -492,3 +492,65 @@ html {
   color: #393d3b;
   opacity: 0.95;
 }
+
+
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+
+@media (max-width: 767px) {
+  /* navbar + spacing */
+  body {
+    padding-top: 70px; /* au lieu de 90 */
+  }
+
+  .custom-navbar {
+    height: 64px;
+    min-height: 64px;
+  }
+
+  .logo-wrapper {
+    width: 140px;
+    height: 64px;
+  }
+
+  .navbar-logo {
+    height: 95px; 
+    left: 0;
+  }
+
+  .hero-section {
+    height: auto;
+    min-height: 100svh; 
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+}
+
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .navbar-nav .nav-link {
+    padding: 10px 8px;
+  }
+
+  .navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.15);
+  }
+}
