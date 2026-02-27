@@ -31,14 +31,42 @@ function Causes() {
 
 
 
+  // useEffect(() => {
+  //   axios
+  //     .get(`${API_BASE}/api/events/`)
+  //     .then((res) => setEvents(res.data))
+  //     .catch((err) => {
+  //       console.error("Failed to load events:", err);
+  //     });
+  // }, []);
+
+
   useEffect(() => {
-    axios
-      .get(`${API_BASE}/api/events/`)
-      .then((res) => setEvents(res.data))
-      .catch((err) => {
-        console.error("Failed to load events:", err);
-      });
-  }, []);
+  let cancelled = false;
+
+  const fetchEvents = async (attempt = 0) => {
+    try {
+      const res = await axios.get(`${API_BASE}/api/events/`, { timeout: 15000 });
+      if (!cancelled) setEvents(res.data);
+    } catch (err) {
+      if (cancelled) return;
+
+      
+      const maxAttempts = 8; 
+      if (attempt < maxAttempts) {
+        const delay = Math.min(2000 * Math.pow(1.5, attempt), 15000); 
+        setTimeout(() => fetchEvents(attempt + 1), delay);
+      } else {
+        console.error("Failed to load events after retries:", err);
+      }
+    }
+  };
+
+  fetchEvents();
+
+  return () => { cancelled = true; };
+}, []);
+
 
 
 
